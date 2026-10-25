@@ -8,4 +8,4 @@ Toàn bộ biểu đồ và ảnh nằm trong một file duy nhất; chỉ cần
 
 Mã nguồn dự án: https://github.com/WuneCutee/omnifall-conditioning
 
-Nhóm: Nguyễn Duy Quân · Cao Văn Mai · Nguyễn Bá Nhất Tâm · Phạm Thanh Sơn — FPT University.
+Nhóm: Nguyễn Duy Quân · Phạm Tuấn Vỹ · Nghiêm Thị Thu Huyền · Vũ Hoàng Anh — FPT University.
