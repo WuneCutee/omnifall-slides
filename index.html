@@ -202,6 +202,31 @@ svg text { font-family: var(--f-body); }
   </div>
 </section>
 
+<!-- 1b · example clip -->
+<section class="slide" data-part="Mở đầu">
+  <div class="eyebrow">Ví dụ thực tế <span class="tc">00</span></div>
+  <h2>Một clip thật: cú ngã kéo dài 1.2 giây, nằm lại gần 8 giây</h2>
+  <div class="grid g-62">
+    <div class="col">
+      <div class="frame" style="max-width:760px"><video id="exvid" src="media/example_fall.mp4" muted loop playsinline preload="auto" aria-label="Clip OF-ItW: một trẻ ngã khỏi đệm và nằm lại trên sàn"></video>
+        <div id="exstate" style="position:absolute;right:14px;top:14px;font-family:var(--f-mono);font-size:18px;padding:6px 14px;border-radius:99px;background:rgba(4,6,14,.75);border:1px solid var(--line)">other</div></div>
+      <div class="strip" id="exstrip" style="position:relative;max-width:760px;grid-template-columns:0.909fr 0.943fr 0.656fr 1.239fr 7.763fr">
+        <div class="seg" data-s="0" data-e="0.909" style="background:#7C8BA8">other</div>
+        <div class="seg" data-s="0.909" data-e="1.852" style="background:#5EEAD4">walk</div>
+        <div class="seg" data-s="1.852" data-e="2.508" style="background:#7C8BA8">other</div>
+        <div class="seg" data-s="2.508" data-e="3.747" style="background:#FBBF4A">fall</div>
+        <div class="seg" data-s="3.747" data-e="11.51" style="background:#FF7A7A;color:#fff">fallen</div>
+        <i id="exhead" style="position:absolute;top:-6px;bottom:-6px;width:3px;left:0;background:#fff;box-shadow:0 0 12px #fff"></i>
+      </div>
+    </div>
+    <div class="col">
+      <div class="panel col"><div class="kicker">Nhãn của clip (giây)</div><p class="small" style="font-size:20px">walk 0.91–1.85 · <span class="t-fall">fall 2.51–3.75</span> · <span class="t-fallen">fallen 3.75–11.5</span></p></div>
+      <div class="panel col"><div class="mid t-fallen">7.8 s</div><div class="small">nằm lại sau cú ngã: đây là trạng thái hệ thống cần báo động</div></div>
+      <p class="note">OF-ItW (OOPS), clip dùng cho minh hoạ nghiên cứu.</p>
+    </div>
+  </div>
+</section>
+
 <!-- 2 · problem -->
 <section class="slide" data-part="Mở đầu">
   <div class="eyebrow">Bài toán <span class="tc">01</span></div>
@@ -462,6 +487,14 @@ svg text { font-family: var(--f-body); }
   <button id="next" type="button" aria-label="Slide sau">›</button>
 </nav>
 
+<script>
+(function(){const v=()=>document.getElementById('exvid');
+function tick(){const vid=v();if(!vid)return;const t=vid.currentTime,d=vid.duration||11.51;const h=document.getElementById('exhead');if(h)h.style.left=(t/d*100)+'%';
+let lab='other';document.querySelectorAll('#exstrip .seg').forEach(g=>{const on=t>=+g.dataset.s&&t<+g.dataset.e;g.style.outline=on?'3px solid #fff':'none';if(on)lab=g.textContent.trim();});
+const st=document.getElementById('exstate');if(st){st.textContent=lab;st.style.color=lab==='fallen'?'#FF7A7A':lab==='fall'?'#FBBF4A':'#E9EFFB';}requestAnimationFrame(tick);}
+requestAnimationFrame(tick);
+window.exampleClip={onSlide(sec){const vid=v();if(!vid)return;if(sec&&sec.contains(vid)){vid.currentTime=0;vid.play().catch(()=>{});}else vid.pause();}};})();
+</script>
 <script>
 /* Starfield (twinkle + slow parallax), occasional shooting stars, and a sparkle burst on each slide change.
    Everything is static when the viewer prefers reduced motion. */
@@ -757,6 +790,7 @@ svg text { font-family: var(--f-body); }
     count.textContent = String(cur + 1).padStart(2, '0') + ' / ' + slides.length;
     stage.dataset.neb = String(parts.indexOf(s.dataset.part));
     if (window.spaceFx) window.spaceFx.onSlide(cur);
+    if (window.exampleClip) window.exampleClip.onSlide(s);
     try { history.replaceState(null, '', '#slide-' + (cur + 1)); } catch (e) {}
   }
   function fit() { const sc = Math.min(window.innerWidth / 1600, window.innerHeight / 900); stage.style.transform = `scale(${sc})`; }
